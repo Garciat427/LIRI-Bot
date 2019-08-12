@@ -1,0 +1,22 @@
+{
+  "name": "liri-bot",
+  "version": "1.0.0",
+  "description": "Spotify Bot that finds information on songs entered",
+  "main": "keys.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garciat427/LIRI-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Garciat427/LIRI-Bot/issues"
+  },
+  "homepage": "https://github.com/Garciat427/LIRI-Bot#readme",
+  "dependencies": {
+    "inquirer": "^6.5.1"
+  }
+}
