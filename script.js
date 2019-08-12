@@ -11,33 +11,30 @@ var fs = require("fs");
 var divider = "\n------------------------------------------------------------\n\n";
 
 // Input Section
+var command = process.argv[2]; //Command
+
+//Paramater from user
 var nodeArgs = process.argv;
-
-// Create an empty variable for holding the movie name
 var nodeParam = "";
-
-// Loop through all the words in the node argument
-// And do a little for-loop magic to handle the inclusion of "+"s
 for (var i = 3; i < nodeArgs.length; i++) {
-
   if (i > 3 && i < nodeArgs.length) {
-    nodeParam = movieName + "+" + nodeArgs[i];
+    nodeParam = nodeParam + "+" + nodeArgs[i];
   } else {
     nodeParam += nodeArgs[i];
-
   }
 }
+console.log("Test");
 
 //Switch Statement
-
-switch(command) {
-  case :
-    
+switch(1) {
+  case 1:
+    console.log("Test");
     break;
   case y:
     // code block
     break;
   default:
+      console.log("Test");
     // code block
 }
 
