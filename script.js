@@ -6,26 +6,51 @@ var spotify = new Spotify(keys.spotify);
 //Require Statements
 var axios = require("axios");
 var fs = require("fs");
-var inquirer = require('inquirer');
 
 // Globals
 var divider = "\n------------------------------------------------------------\n\n";
 
+// Input Section
+var nodeArgs = process.argv;
+
+// Create an empty variable for holding the movie name
+var nodeParam = "";
+
+// Loop through all the words in the node argument
+// And do a little for-loop magic to handle the inclusion of "+"s
+for (var i = 3; i < nodeArgs.length; i++) {
+
+  if (i > 3 && i < nodeArgs.length) {
+    nodeParam = movieName + "+" + nodeArgs[i];
+  } else {
+    nodeParam += nodeArgs[i];
+
+  }
+}
+
+//Switch Statement
+
+switch(command) {
+  case :
+    
+    break;
+  case y:
+    // code block
+    break;
+  default:
+    // code block
+}
+
 //Constructors
 
-
-var TV = function() {
-  this.findShow = function(show) {
-    var URL = "http://api.tvmaze.com/singlesearch/shows?q=" + show;
-
+var concert = function() {
+  this.findShow = function(artist) {
+    var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function(response) {
       var jsonData = response.data;
       var showData = [
-        "Show: " + jsonData.name,
-        "Genre(s): " + jsonData.genres.join(", "),
-        "Rating: " + jsonData.rating.average,
-        "Network: " + jsonData.network.name,
-        "Summary: " + jsonData.summary
+        "Show: " + jsonData.url,
+        
       ].join("\n\n");
 
       // Append showData and the divider to log.txt, print showData to the console
