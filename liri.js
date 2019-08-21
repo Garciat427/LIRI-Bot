@@ -35,6 +35,10 @@ switch(command) {
     case "spotify-this-song":
       var spotifyThis = Song (nodeParam);
     break;
+
+    case "movie-this":
+      var movieThis = Movie (nodeParam);
+    break;
   //If wrong command
   default:
         console.log("Default was selected");
@@ -46,44 +50,55 @@ switch(command) {
 function Concert(artist) {
     var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function(response) {
-      console.log("================================================");
-      console.log("--------- Artist: " + artist + " -------------");
-      for (index = 1; index <= 10; index ++){
-        var eventData = response.data[index - 1];
-        console.log(divider);
-        console.log("------- Event " + index + " -------");   
-        console.log("Venue: " + eventData.venue.name);
-        console.log("Location: " + eventData.venue.region + ", " + eventData.venue.country);
-        console.log("Date of Event: " + eventData.datetime);
-      }
+      if (response.data[0].venue){ //If event is found
+        var eventArr = response.data;
+        console.log("================================================");
+        console.log("--------- Artist: " + artist + " -------------");
+        for (index = 1; index <= eventArr.length; index ++){
+          var eventData = eventArr[index - 1];
+          console.log(divider);
+          console.log("------- Event " + index + " -------");   
+          console.log("Venue: " + eventData.venue.name);
+          console.log("Location: " + eventData.venue.region + ", " + eventData.venue.country);
+          console.log("Date of Event: " + eventData.datetime);
+        }
+      } else {
+        console.log("Cannot find events");
+      }  
     });
 };
 
+//Find Songs
 function Song(song) {
-  spotify.search({ type: 'track', query: 'caught up' , limit: 20}, function(err, data) {
+  spotify.search({ type: 'track', query: song , limit: 5}, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
 
-    var track = data.tracks.items[0];
-    var artistArr = track.artists
-    
-  if (track){ //If track exisits
-    console.log("------------ Song Info -------------");
-    console.log("Song Name: " +track.name);
-    console.log("---- Artists ---");
-    for (index = 0; index < artistArr.length; index++){
-      console.log(artistArr[index].name);
+  if (data.tracks.items[0]){ //If track exisits
+    console.log("in");
+    console.log(data);
+    var songsArr = data.tracks.items;
+    for (index = 0; index < songsArr.length; index++){
+      var track = songsArr[index];
+      var artistArr = track.artists
+      console.log("------------ Song " + (index + 1) + " Info -------------");
+      console.log("Song Name: " +track.name);
+      console.log("---- Artists ---");
+      for (index2 = 0; index2 < artistArr.length; index2++){
+        console.log(artistArr[index2].name);
+      }
+      console.log("---- Links ----");
+      console.log("Open Song on Spotify: " + track.external_urls.spotify);
+      console.log("Preview Song: " + track.preview_url);
+      console.log("\n------------ Album Info -------------");
+      console.log("Album Name: " +track.album.name);
+      console.log("Album Type: " +track.album.album_type);
+      console.log(divider);
     }
-    console.log("---- Links ----");
-    console.log("Open Song on Spotify: " + track.external_urls.spotify);
-    console.log("Preview Song: " + track.preview_url);
-    console.log("\n------------ Album Info -------------");
-    console.log("Album Name: " +track.album.name);
-    console.log("Album Type: " +track.album.album_type);
-
   } else {
-    console.log("false")
+    console.log("Song Not Found")
   }
   });
 };
+
