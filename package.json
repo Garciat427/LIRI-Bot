@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Garciat427/LIRI-Bot#readme",
   "dependencies": {
-    "inquirer": "^6.5.1"
+    "inquirer": "^6.5.1",
+    "moment": "^2.24.0"
   }
 }

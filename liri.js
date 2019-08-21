@@ -1,11 +1,12 @@
 //Configuration
-//require(".env").config();
+//require("dot env").config();
 //var keys = require("./keys.js");
 //var spotify = new Spotify(keys.spotify);
 
 //Require Statements
 var axios = require("axios");
 var fs = require("fs");
+var moment = require ("moment")
 
 // Globals
 var divider = "\n------------------------------------------------------------\n\n";
@@ -24,66 +25,36 @@ for (var i = 3; i < nodeArgs.length; i++) {
   }
 }
 
-
 //Switch Statement
 switch(command) {
+  //Concert-this command
   case "concert-this":
-    var concert
+    var concertThis = concert (nodeParam);
+    //concertThis.findShow(nodeParam);
     break;
-  case "somthingelse":
-    // code block
-    break;
+  
+  //If wrong command
   default:
-        console.log("Test2");
-    // code block
+        console.log("Default was selected");
 }
 
 //Constructors
 
-var concert = function(artist) {
-  this.findShow = function() {
+//Find Concert/events Function
+function concert(artist) {
     var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function(response) {
-      var jsonData = response.data;
-      var showData = [
-        "Show: " + jsonData.url,
-        
-      ].join("\n\n");
-
-      // Append showData and the divider to log.txt, print showData to the console
-      fs.appendFile("log.txt", showData + divider, function(err) {
-        if (err) throw err;
-        console.log(showData);
-      });
+      console.log("================================================");
+      console.log("--------- Artist: " + artist + " -------------");
+      for (index = 1; index <= 10; index ++){
+        var eventData = response.data[index - 1];
+        console.log(divider);
+        console.log("------- Event " + index + " -------");   
+        console.log("Venue: " + eventData.venue.name);
+        console.log("Location: " + eventData.venue.region + ", " + eventData.venue.country);
+        console.log("Date of Event: " + eventData.datetime);
+      }
     });
-  };
-
-  this.findActor = function(actor) {
-    var URL = "http://api.tvmaze.com/search/people?q=" + actor;
-    
-    axios.get(URL).then(function(response) {
-      // Place the response.data into a variable, jsonData.
-      var jsonData = response.data[0].person;
-
-      // showData ends up being the string containing the show data we will print to the console
-      var showData = [
-        "Name: " + jsonData.name,
-        "Birthday: " + jsonData.birthday,
-        "Gender: " + jsonData.gender,
-        "Country: " + jsonData.country.name,
-        "TV Maze Url: " + jsonData.url
-      ].join("\n\n");
-
-      // Append showData and the divider to log.txt, print showData to the console
-      fs.appendFile("log.txt", showData + divider, function(err) {
-        if (err) throw err;
-        console.log(divider + showData + divider);
-      });
-    });
-
-    // Add code to search the TVMaze API for the given actor
-    // The API will return an array containing multiple actors, just grab the first result
-    // Append the actor's name, birthday, gender, country, and URL to the `log.txt` file
-    // Print this information to the console
-  };
 };
+
+
