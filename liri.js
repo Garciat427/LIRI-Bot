@@ -7,10 +7,9 @@ var spotify = new Spotify(keys.spotify);
 //Require Statements
 var axios = require("axios");
 var fs = require("fs");
-var moment = require ("moment")
 
 // Globals
-var divider = "\n------------------------------------------------------------\n\n";
+var divider = "\n------------------------------------------------------------\n";
 
 // Input Section
 var command = process.argv[2]; //Command
@@ -33,8 +32,8 @@ switch(command) {
       var concertThis = Concert (nodeParam);
     break;
   
-    case "concert-this":
-      var concertThis = Concert (nodeParam);
+    case "spotify-this-song":
+      var spotifyThis = Song (nodeParam);
     break;
   //If wrong command
   default:
@@ -60,4 +59,31 @@ function Concert(artist) {
     });
 };
 
+function Song(song) {
+  spotify.search({ type: 'track', query: 'caught up' , limit: 20}, function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
 
+    var track = data.tracks.items[0];
+    var artistArr = track.artists
+    
+  if (track){ //If track exisits
+    console.log("------------ Song Info -------------");
+    console.log("Song Name: " +track.name);
+    console.log("---- Artists ---");
+    for (index = 0; index < artistArr.length; index++){
+      console.log(artistArr[index].name);
+    }
+    console.log("---- Links ----");
+    console.log("Open Song on Spotify: " + track.external_urls.spotify);
+    console.log("Preview Song: " + track.preview_url);
+    console.log("\n------------ Album Info -------------");
+    console.log("Album Name: " +track.album.name);
+    console.log("Album Type: " +track.album.album_type);
+
+  } else {
+    console.log("false")
+  }
+  });
+};
