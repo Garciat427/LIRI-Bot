@@ -70,14 +70,19 @@ function Concert(artist) {
 
 //Find Songs
 function Song(song) {
-  spotify.search({ type: 'track', query: song , limit: 5}, function(err, data) {
+  var songLimit;
+  if (!song){ //If no song is entered, use defaulted
+    song = "The Sign Ace of Base";
+    songLimit = 1;
+  } else {
+    songLimit = 5
+  }
+  spotify.search({ type: 'track', query: song , limit: songLimit}, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
 
   if (data.tracks.items[0]){ //If track exisits
-    console.log("in");
-    console.log(data);
     var songsArr = data.tracks.items;
     for (index = 0; index < songsArr.length; index++){
       var track = songsArr[index];
