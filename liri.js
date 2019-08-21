@@ -1,7 +1,8 @@
 //Configuration
-//require("dot env").config();
-//var keys = require("./keys.js");
-//var spotify = new Spotify(keys.spotify);
+require("dotenv").config();
+var Spotify = require('node-spotify-api');
+var keys = require("./keys.js");
+var spotify = new Spotify(keys.spotify);
 
 //Require Statements
 var axios = require("axios");
@@ -28,11 +29,13 @@ for (var i = 3; i < nodeArgs.length; i++) {
 //Switch Statement
 switch(command) {
   //Concert-this command
-  case "concert-this":
-    var concertThis = concert (nodeParam);
-    //concertThis.findShow(nodeParam);
+    case "concert-this":
+      var concertThis = Concert (nodeParam);
     break;
   
+    case "concert-this":
+      var concertThis = Concert (nodeParam);
+    break;
   //If wrong command
   default:
         console.log("Default was selected");
@@ -41,7 +44,7 @@ switch(command) {
 //Constructors
 
 //Find Concert/events Function
-function concert(artist) {
+function Concert(artist) {
     var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function(response) {
       console.log("================================================");

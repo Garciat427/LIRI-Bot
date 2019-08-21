@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/Garciat427/LIRI-Bot#readme",
   "dependencies": {
+    "dotenv": "^8.1.0",
     "inquirer": "^6.5.1",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "node-spotify-api": "^1.1.1"
   }
 }
