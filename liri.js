@@ -25,13 +25,18 @@ for (var i = 3; i < nodeArgs.length; i++) {
   }
 }
 
+if (command === "do-what-it-says"){
+  var randInfo = Command()
+} else {
+  runSwitch ();
+}
+
 //Switch Statement
-switch(command) {
-  //Concert-this command
+function runSwitch (){
+  switch(command) {
     case "concert-this":
       var concertThis = Concert (nodeParam);
     break;
-  
     case "spotify-this-song":
       var spotifyThis = Song (nodeParam);
     break;
@@ -39,10 +44,16 @@ switch(command) {
     case "movie-this":
       var movieThis = Movie (nodeParam);
     break;
-  //If wrong command
-  default:
-        console.log("Default was selected");
+    //If wrong command
+    default:
+      console.log("Command was incorrect! Please enter the following commands: \n \n \n \ndo-what-it-says ");
+      console.log("\"concert-this <artist/band name here>\" ~ Command to find events by artist entered");
+      console.log("\"spotify-this-song <song name here>\" ~ Command to song entered on spotify");
+      console.log("\"movie-this <movie name here>\" ~ Command to find info on movie entered");
+      console.log("\"do-what-it-says\" ~ Command used to run command stored in random.txt");
+  }
 }
+
 
 //Constructors
 
@@ -109,6 +120,9 @@ function Song(song) {
 
 //Find Movies
 function Movie(movie) {
+  if (!movie){ //If no movie is entered, use defaulted
+    movie = "Mr. Nobody";
+  }
   var URL = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
   axios.get(URL).then(function(response) {
     //console.log (response.data);
@@ -137,4 +151,18 @@ function Movie(movie) {
       console.log("Cannot find movie");
     }  
   });
+};
+
+//Run command in random.txt
+function Command() {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    var dataArr = data.split(",");
+    command = dataArr[0];
+    nodeParam = dataArr[1];
+    runSwitch ();
+  });
+  
 };
