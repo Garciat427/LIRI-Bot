@@ -102,3 +102,34 @@ function Song(song) {
   });
 };
 
+//Find Movies
+function Movie(movie) {
+  var URL = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+  axios.get(URL).then(function(response) {
+    //console.log (response.data);
+    if (response.data){ //If event is found
+      var movieInfo = response.data;
+      console.log("\n================================================");
+      console.log("--------- Movie Info -------------")
+      console.log("Movie Title: " + movieInfo.Title);
+      console.log("Movie Release Year: " + movieInfo.Year);
+      console.log("Movie Production Country: " + movieInfo.Country);
+      console.log("Movie Language: " + movieInfo.Language);
+      console.log("Movie Actors: " + movieInfo.Actors);
+      console.log("\n--------- Movie Ratings -------------")
+      console.log("Movie IMDB Rating: " + movieInfo.imdbRating);
+      //Rotten Tomatioes
+      var ratings = movieInfo.Ratings;
+      for (var i = 0; i < ratings.length; i++){
+        if (ratings[i].Source === 'Rotten Tomatoes'){
+          console.log("Movie Rotten Tomatoes Rating: " + ratings[i].Value);
+        }
+      }
+      console.log("\n--------- Movie Plot -------------")
+      console.log("Movie Title: " + movieInfo.Plot);
+      console.log(divider);
+    } else {
+      console.log("Cannot find movie");
+    }  
+  });
+};
